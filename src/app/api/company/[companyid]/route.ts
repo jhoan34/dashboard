@@ -34,9 +34,10 @@ export async function PATCH(req: Request, { params }: { params: { companyid: str
 }
 
 
-export async function DELETE(req: Request, { params }: { params: { companyid: string } }) {
+export async function DELETE(req: Request) {
     try {
-        const { companyid } = params; // No need for await here
+        const url = new URL(req.url);
+        const companyid = url.pathname.split("/")[3]; // Asegúrate de que el id esté en la posición correcta
         const { userId } = await auth(); // Assuming auth() works synchronously, no need for await
 
         if (!userId) {
