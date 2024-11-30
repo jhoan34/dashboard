@@ -6,7 +6,8 @@ export async function POST(req: Request) {
     try {
         // Obtener el companyId de la URL
         const url = new URL(req.url);
-        const idparacontact = url.pathname.split("/")[3]; // Asegúrate de que el id esté en la posición correcta
+        const idparacontact = url.pathname.split("/")[3]; // Asegúrate de que el ID esté en la posición correcta
+        console.log("idparacontact:", idparacontact);
 
         // Verificar si el ID está presente
         if (!idparacontact) {
@@ -17,9 +18,12 @@ export async function POST(req: Request) {
         const data = await req.json();
 
         // Verificar si los datos no están vacíos
-        if (!data || Object.keys(data).length === 0) {
-            return new NextResponse("Request body is required", { status: 400 });
+        if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
+            return new NextResponse("Request body is required and must be an object", { status: 400 });
         }
+
+        // Agregar un log para verificar los datos recibidos
+        console.log("Data received:", data);
 
         // Verificar si el usuario está autenticado
         const { userId } = await auth();
@@ -55,10 +59,10 @@ export async function POST(req: Request) {
         // Devolver la respuesta con el contacto creado
         return NextResponse.json(contact);
     } catch (error) {
-        console.error("Error:", error);
-        // Si el error es un objeto, puedes enviar un mensaje detallado
+        // Si el er es un objeto, puedes enviar un mensaje detallado
         const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+        console.error("Error message:", errorMessage);
+        // Mejor manejo del error
         return new NextResponse(`Internal Server Error: ${errorMessage}`, { status: 500 });
     }
 }
-
