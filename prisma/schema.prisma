@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String?
+  name         String
+  country      String?  // Asegúrate de que el campo 'country' esté presente y sea del tipo adecuado
+  website      String?
+  phone        String?
+  cif          String?
+  profileImage String?
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relaciones a otros modelos (si las tienes)
+  contacts     Contact[]
+  events       Event[]
+}
+
+
+model Contact {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  companyId   String     @db.ObjectId
+  name        String
+  role        String
+  email       String     @unique
+  phone       String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  company     Company?   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  @@index([companyId])
+}
+
+model Event {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  companyId   String     @db.ObjectId
+  title       String
+  start       DateTime
+  allDay      Boolean
+  timeFormat  TimeFormat
+  company     Company    @relation(fields: [companyId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  @@index([companyId])
+}
+
+enum TimeFormat {
+  AM_PM
+  MILITARY
+}
