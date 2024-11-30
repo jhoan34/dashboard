@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { HeaderCompanyIdPage } from "./components/header";
 import { FooterComaniesIdPage } from "./components/footer";
 import { CompaniesInformation } from "./components/companyInformation";
