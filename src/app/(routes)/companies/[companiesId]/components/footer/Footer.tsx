@@ -20,6 +20,7 @@ export function FooterComaniesIdPage (props : FooterComaniesIdPageProps) {
             
 
         }catch (error) {
+            console.log(error);
             toast({
                 title: "Something went wrong",
             })

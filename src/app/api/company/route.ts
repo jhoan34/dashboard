@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     }
 
     // Crea el objeto de datos validado y asegurado
-    const companyData: any = {
+    const companyData = {
       userId,
       ...data
     };
@@ -25,8 +25,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(company);
-  } catch (error : any) {
-    console.error(error.message);
+  } catch (error) {
+    console.error(error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

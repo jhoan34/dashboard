@@ -21,6 +21,7 @@ import axios from "axios"
 import { UploadButton } from "@/lib/uploadthing";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { IsKnown } from "@tanstack/react-table";
 
 
 const formSchema = z.object({
@@ -68,8 +69,9 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
       router.refresh();
       setOpenModalCreate(false);
     } catch (error) {
+      console.log(error);
       toast({
-        title: error as any,
+        title: "Something went wrong" ,
         variant: "destructive",
       });
     }
@@ -202,7 +204,8 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
                 )}
             />
 
-            <Button type="submit" >
+            <Button 
+                disabled={!isValid} type="submit" >
                 Submit
             </Button>
         </div>

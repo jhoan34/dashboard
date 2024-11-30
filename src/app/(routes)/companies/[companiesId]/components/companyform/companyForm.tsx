@@ -1,6 +1,6 @@
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { set, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import {z} from "zod"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
@@ -23,11 +23,9 @@ import {
 } from "@/components/ui/select"
 
 import { Input } from "@/components/ui/input"
-import { Toast } from "@/components/ui/toast"
 import { useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { UploadButton } from "@/lib/uploadthing"
-import { cp } from "fs"
 import { toast } from "@/hooks/use-toast"
 import axios from "axios"
 
@@ -56,6 +54,7 @@ export function CompanyForm (props : CompanyFormProps) {
             })
             router.refresh()
         }catch (error) {
+            console.log(error)
             toast({
                 title: "Something went wrong",
                 variant: "destructive"

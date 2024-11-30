@@ -27,8 +27,8 @@ export async function PATCH(req: Request, { params }: { params: { companyid: str
         }
 
         return NextResponse.json(company);
-    } catch (error: any) {
-        console.error(error.message);
+    } catch (error) {
+        console.error(error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }

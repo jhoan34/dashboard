@@ -8,12 +8,10 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import { CalendarProps } from "./types";
-import { DateSelectArg , EventContentArg, formatDate } from "@fullcalendar/core/index.js";
+import { DateSelectArg , EventClickArg, EventContentArg, formatDate } from "@fullcalendar/core/index.js";
 import axios from "axios";
-import { formdate } from "@/lib/formdata";
 import { toast } from "@/hooks/use-toast";
 import { ModalEvent } from "../modaladdevent";
-import { View } from "lucide-react";
 
 export function CalendarComponent(props : CalendarProps) {
     const { companies, events } = props
@@ -74,24 +72,23 @@ export function CalendarComponent(props : CalendarProps) {
         }
     }, [onSaveEvent, selectedItem, events]);
     
-
-    const handleEventClick = async (select : any) => {
-        if(window.confirm("Are you sure you want to delete this event?")) {
+    const handleEventClick = async (select: EventClickArg) => {
+        if (window.confirm("Are you sure you want to delete this event?")) {
             try {
-                await axios.delete(`/api/event/${select.event._def.publicId}`)
+                await axios.delete(`/api/event/${select.event.id}`);
                 toast({
-                    title : "Evento eliminado",
-                })
-                router.refresh()
-                
+                    title: "Evento eliminado",
+                });
+                router.refresh();
             } catch (error) {
+                console.error(error);
                 toast({
-                    title : "Error al eliminar el evento",
-                    variant : "destructive"
-                })
+                    title: "Error al eliminar el evento",
+                    variant: "destructive",
+                });
             }
         }
-    }
+    };
 
     return (
         <div>

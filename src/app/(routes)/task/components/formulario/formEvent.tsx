@@ -34,7 +34,7 @@ export function FormEvent(props: FormEventProps) {
         name: "",
         id: ""
     });
-
+    console.log(selectedCompany);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
