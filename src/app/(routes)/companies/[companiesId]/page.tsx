@@ -1,19 +1,33 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
+import { notFound, redirect } from "next/navigation";
 import { HeaderCompanyIdPage } from "./components/header";
 import { FooterComaniesIdPage } from "./components/footer";
 import { CompaniesInformation } from "./components/companyInformation";
 
-interface CompaniesIdPageProps {
-    company: any; // Define this based on the actual company model
-}
+export default async function CompaniesIdPage({ params }: { params: { companiesId: string } }) {
+    // Get the userId from Clerk's authentication system
+    const { userId } = await auth();
 
-export default function CompaniesIdPage({ company }: CompaniesIdPageProps) {
-    if (!company) {
-        // If company data is missing, redirect
-        return <div>Company not found</div>;
+    // If no userId exists, redirect to login page
+    if (!userId) {
+        return redirect("/login");
     }
 
+    // Fetch the company associated with the current user and companiesId
+    const company = await db.company.findUnique({
+        where: {
+            id: params.companiesId,  // Query by companiesId directly
+            userId,                   // Ensure the userId matches
+        },
+    });
+
+    // If no company is found, redirect to home page or show a 404
+    if (!company) {
+        return redirect("/");  // Or use notFound() for 404
+    }
+
+    // Render the page with company data
     return (
         <div>
             <HeaderCompanyIdPage />
@@ -21,36 +35,4 @@ export default function CompaniesIdPage({ company }: CompaniesIdPageProps) {
             <FooterComaniesIdPage company={company} />
         </div>
     );
-}
-
-// Use getServerSideProps for async data fetching
-export async function getServerSideProps({ params }: { params: { companiesId: string } }) {
-    const { companiesId } = params;
-
-    // Authenticate user
-    const { userId } = await auth();
-
-    if (!userId) {
-        return { redirect: { destination: "/login", permanent: false } };
-    }
-
-    // Fetch company data from the database
-    const company = await db.company.findUnique({
-        where: {
-            id: companiesId,
-            userId,
-        },
-    });
-
-    // If company doesn't exist, redirect to the home page
-    if (!company) {
-        return { redirect: { destination: "/", permanent: false } };
-    }
-
-    // Pass company data as a prop to the page component
-    return {
-        props: {
-            company,
-        },
-    };
 }
