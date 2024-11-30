@@ -49,8 +49,6 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
     },
   });
 
-  const { isValid } = form.formState;
-
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (!values.profileImage) {
@@ -206,7 +204,7 @@ export function FormCreateCustomer(props: FormCreateCustomerProps) {
             />
 
             <Button 
-                disabled={!isValid} type="submit" >
+                     type="submit" >
                 Submit
             </Button>
         </div>

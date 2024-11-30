@@ -38,28 +38,24 @@ export async function PATCH(req: Request) {
 export async function DELETE(req: Request) {
     try {
         const url = new URL(req.url);
-        const companyid = url.pathname.split("/")[3]; // Asegúrate de que el id esté en la posición correcta
+        const eventId = url.pathname.split("/")[3]; // Asegúrate de que el id esté en la posición correcta
         const { userId } = await auth(); // Assuming auth() works synchronously, no need for await
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
-        }
+        } 
 
-        const company = await db.company.delete({
+        const event = await db.company.delete({
             where: {
-                id: companyid,
-                userId
+                id: eventId,
             }
-        });
+        })
 
-        if (!company) {
-            return new NextResponse("Company not found", { status: 404 });
-        }
-
-        return NextResponse.json(company);
+        return NextResponse.json(event);
         
     } catch (error) {
-        console.error(error);
+        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+        console.error(errorMessage, "879889789778997897878989897");
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }
