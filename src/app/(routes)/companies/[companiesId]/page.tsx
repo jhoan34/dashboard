@@ -6,11 +6,13 @@ import { FooterComaniesIdPage } from "./components/footer";
 import { CompaniesInformation } from "./components/companyInformation";
 
 interface CompaniesIdPageProps {
-    params: { companiesId: string }; // Define explícitamente el tipo de params
+    params: { companiesId: string };
 }
 
 export default async function CompaniesIdPage({ params }: CompaniesIdPageProps) {
-    const { companiesId } = params; // Extraemos `companiesId` de los parámetros de la ruta
+    // Await params before using
+    const { companiesId } = await params;
+
     const { userId } = await auth();
 
     if (!userId) {
