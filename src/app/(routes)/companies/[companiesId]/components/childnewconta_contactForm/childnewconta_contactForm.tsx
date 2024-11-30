@@ -47,6 +47,7 @@ export function Childnewconta_contactForm (props : ContactFormProps) {
             router.refresh();
             setOpen(false);
         } catch (error) {
+            console.log(error);
             toast({
                 title: "Ocurrió un error",
                 variant: "destructive",

@@ -103,7 +103,7 @@ export function FormEvent(props: FormEventProps) {
                             >
                                 <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Select a company" />
+                                        <SelectValue {...field} placeholder="Select a company" />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>

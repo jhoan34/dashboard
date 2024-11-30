@@ -165,6 +165,7 @@ export function CompanyForm (props : CompanyFormProps) {
                                                         setPhotoUploaded(true)
                                                     }}
                                                     onUploadError={(error) => { 
+                                                        console.log(error)
                                                         toast({
                                                             title: "Something went wrong",
                                                         })

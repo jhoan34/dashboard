@@ -11,7 +11,7 @@ export function SideBarRoutes () {
                 <div className="p-2 md:p-6">
                     <p className="text-slate-500 mb-2">General</p>
                     {
-                        dataGeneralSidebar.map((element , index) => (
+                        dataGeneralSidebar.map((element) => (
                             <SideBarItem key={element.label} item={element} />
                         ))
                     }
@@ -20,7 +20,7 @@ export function SideBarRoutes () {
                 <div className="p-2 md:p-6">
                     <p className="text-slate-500 mb-2" >Tools</p>
                     {
-                        dataToolsSidebar.map((element, index) => (
+                        dataToolsSidebar.map((element) => (
                             <SideBarItem key={element.label} item={element} />
                         ))
                     }
@@ -29,7 +29,7 @@ export function SideBarRoutes () {
                 <div className="p-2 md:p-6 ">
                     <p className="text-slate-500 mb-2" >Support</p>
                     {
-                        dataSupportSidebar.map((element, index) => (
+                        dataSupportSidebar.map((element) => (
                             <SideBarItem key={element.label} item={element} />
                         ))
                     }

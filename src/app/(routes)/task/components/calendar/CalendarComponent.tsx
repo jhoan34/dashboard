@@ -19,7 +19,7 @@ export function CalendarComponent(props : CalendarProps) {
     const [open, setOpen] = useState(false)
     const [onSaveEvent, setOnSaveEvent] = useState(false)
     const [selectedItem, setSelectedItem] = useState<DateSelectArg>()
-    const [newEvent, setNewEvent] = useState<any>({
+    const [newEvent, setNewEvent] = useState<{eventName: string, companiesSelected: {name: string, id: string}}>({
         eventName: "",
         companiesSelected: {
             name: "",
