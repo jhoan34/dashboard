@@ -2,9 +2,10 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-export async function DELETE(req: Request, { params }: { params: { eventId: string } }) {
+export async function DELETE(req: Request) {
     try {
-        const { eventId } = params; // No need for await here
+        const url = new URL(req.url);
+        const eventId = url.pathname.split("/")[3]; // Asegúrate de que el id esté en la posición correcta
         const { userId } = await auth(); // Assuming auth() works synchronously, no need for await
 
         if (!userId) {
