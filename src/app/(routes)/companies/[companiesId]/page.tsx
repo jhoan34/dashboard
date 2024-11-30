@@ -5,9 +5,8 @@ import { HeaderCompanyIdPage } from "./components/header";
 import { FooterComaniesIdPage } from "./components/footer";
 import { CompaniesInformation } from "./components/companyInformation";
 
-type tParams = Promise<{ companiesId: string }>;
 
-export default async function CompaniesIdPage(props: { params: tParams }) {
+export default async function CompaniesIdPage(props: { params: Promise<{ companiesId: string }> }) {
     const companiesId = (await props.params).companiesId;
 
     const { userId } = await auth();
