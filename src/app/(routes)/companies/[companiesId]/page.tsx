@@ -5,30 +5,27 @@ import { HeaderCompanyIdPage } from "./components/header";
 import { FooterComaniesIdPage } from "./components/footer";
 import { CompaniesInformation } from "./components/companyInformation";
 
-
-export default async function CompaniesIdPage(props: { params: Promise<{ companiesId: string }> }) {
-    const companiesId = (await props.params).companiesId;
+// After the upgrade to Next.js 15
+export default async function CompaniesIdPage({ params }: { params: Promise<{ companiesId: string }> }) {
+    const { companiesId } = await params;
 
     const { userId } = await auth();
-    // If no userId exists, redirect to login page
+
     if (!userId) {
         return redirect("/login");
     }
 
-    // Fetch the company associated with the current user and companiesId
     const company = await db.company.findUnique({
         where: {
-            id: companiesId,  // Query by companiesId directly
-            userId,                   // Ensure the userId matches
+            id: companiesId,
+            userId,
         },
     });
 
-    // If no company is found, redirect to home page or show a 404
     if (!company) {
-        return redirect("/");  // Or use notFound() for 404
+        return redirect("/");
     }
 
-    // Render the page with company data
     return (
         <div>
             <HeaderCompanyIdPage />
@@ -37,3 +34,4 @@ export default async function CompaniesIdPage(props: { params: Promise<{ compani
         </div>
     );
 }
+
